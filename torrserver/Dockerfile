@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/alpine-base:3.20
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
 FROM ${BUILD_FROM}
 
 ARG BUILD_ARCH
@@ -29,3 +29,4 @@ RUN chmod a+x /run.sh
 VOLUME ["/data"]
 
 CMD [ "/run.sh" ]
+
