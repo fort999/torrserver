@@ -1,0 +1,45 @@
+name: "TorrServer MatriX"
+description: "TorrServer MatriX streaming torrent server for Home Assistant"
+version: "MatriX.145.UN"
+slug: "torrserver"
+url: "https://github.com/bylampa/Matrix"
+arch:
+  - aarch64
+  - amd64
+  - armv7
+  - i386
+startup: application
+boot: auto
+init: false
+ingress: true
+ingress_port: 8090
+panel_icon: mdi:play-circle-outline
+ports:
+  8090/tcp: 8090
+ports_description:
+  8090/tcp: "TorrServer Web UI and streaming port"
+webui: "http://[HOST]:[PORT:8090]"
+schema:
+  port: "int(1024,65535)"
+  httpauth: bool
+  logins:
+    - username: str
+      password: str
+  proxyurl: "str?"
+  proxymode: "list(disabled|tracker|peers|full)"
+  weblog: bool
+  dontkill: bool
+  rdb: bool
+  tgtoken: "str?"
+options:
+  port: 8090
+  httpauth: false
+  logins: []
+  proxyurl: ""
+  proxymode: "disabled"
+  weblog: false
+  dontkill: false
+  rdb: false
+  tgtoken: ""
+map:
+  - share:rw

@@ -1,0 +1,31 @@
+ARG BUILD_FROM=ghcr.io/home-assistant/alpine-base:3.20
+FROM ${BUILD_FROM}
+
+ARG BUILD_ARCH
+ARG MATRIX_VERSION="MatriX.145.UN"
+
+ENV TS_CONF_PATH="/data" \
+    TS_TORR_DIR="/data/torrents"
+
+RUN apk add --no-cache \
+        ca-certificates \
+        curl \
+        jq \
+        tzdata \
+    && case "${BUILD_ARCH}" in \
+        amd64)   ASSET_ARCH="amd64" ;; \
+        aarch64) ASSET_ARCH="arm64" ;; \
+        armv7)   ASSET_ARCH="arm7"  ;; \
+        i386)    ASSET_ARCH="386"   ;; \
+        *) echo "Unsupported architecture: ${BUILD_ARCH}"; exit 1 ;; \
+    esac \
+    && curl -fsSL -o /usr/bin/torrserver \
+        "https://github.com/bylampa/Matrix/releases/download/${MATRIX_VERSION}/TorrServer-linux-${ASSET_ARCH}" \
+    && chmod a+x /usr/bin/torrserver
+
+COPY run.sh /run.sh
+RUN chmod a+x /run.sh
+
+VOLUME ["/data"]
+
+CMD [ "/run.sh" ]
