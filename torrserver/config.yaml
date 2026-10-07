@@ -1,6 +1,6 @@
 name: "TorrServer MatriX"
 description: "TorrServer MatriX streaming torrent server for Home Assistant"
-version: "MatriX.145.UN-1"
+version: "MatriX.145.UN-2"
 slug: "torrserver"
 url: "https://github.com/bylampa/Matrix"
 arch:

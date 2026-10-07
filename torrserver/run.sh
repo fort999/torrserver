@@ -3,7 +3,8 @@ set -eo pipefail
 
 bashio::log.info "Starting TorrServer MatriX initialization..."
 
-TS_PORT=$(bashio::config 'port')
+# 8090 is occupied by the Ingress-aware nginx proxy.
+TS_PORT=8091
 TS_CONF_PATH="/data"
 TS_TORR_DIR="/data/torrents"
 
@@ -72,4 +73,21 @@ export GODEBUG="madvdontneed=1"
 bashio::log.info "TorrServer port: ${TS_PORT}"
 bashio::log.info "Launching TorrServer MatriX..."
 
-exec /usr/bin/torrserver ${FLAGS}
+/usr/bin/torrserver ${FLAGS} &
+TORRSERVER_PID=$!
+
+nginx -g 'daemon off;' &
+NGINX_PID=$!
+
+cleanup() {
+    kill "${TORRSERVER_PID}" "${NGINX_PID}" 2>/dev/null || true
+}
+
+trap cleanup TERM INT
+
+wait -n "${TORRSERVER_PID}" "${NGINX_PID}"
+STATUS=$?
+
+cleanup
+wait "${TORRSERVER_PID}" "${NGINX_PID}" 2>/dev/null || true
+exit "${STATUS}"

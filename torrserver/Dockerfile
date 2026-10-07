@@ -11,6 +11,7 @@ RUN apk add --no-cache \
         ca-certificates \
         curl \
         jq \
+        nginx \
         tzdata \
     && case "${BUILD_ARCH}" in \
         amd64)   ASSET_ARCH="amd64" ;; \
@@ -24,6 +25,8 @@ RUN apk add --no-cache \
     && chmod a+x /usr/bin/torrserver
 
 COPY run.sh /run.sh
+COPY nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /run/nginx
 RUN chmod a+x /run.sh
 
 VOLUME ["/data"]
