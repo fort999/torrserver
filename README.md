@@ -5,7 +5,7 @@
 ## Что внутри
 Аддон на базе релиза [TorrServer MatriX (bylampa/Matrix)](https://github.com/bylampa/Matrix/releases/tag/MatriX.145.UN).
 
-- **Версия:** MatriX.145.UN
+- **Версия:** MatriX.146.UN
 - **Поддерживаемые архитектуры:** `amd64`, `aarch64` (ARM64 / Raspberry Pi 3/4/5 64-bit), `armv7` (Raspberry Pi 32-bit), `i386`
 - **Веб-интерфейс:** доступен через Ingress в боковой панели Home Assistant и/или по порту `8090` (для Lampa, Kodi, Vimu, Android TV и т.д.)
 - **Постоянное хранение:** настройки и торренты сохраняются в каталоге данных аддона (`/data`).
